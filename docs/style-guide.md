@@ -32,6 +32,14 @@ projects/<categorie>/<taal>_<naam>/
 `<taal>` is `c_`, `cpp_` of `py_`. Twee projecten die hetzelfde doen in een
 andere taal delen de `<naam>`: `c_echo_http` en `py_echo_http`.
 
+Een Python-project heeft geen `src/` en geen `CMakeLists.txt`. Het package
+staat in de projectmap (`echo_http/`, te starten met `python -m echo_http`), en
+`pyproject.toml` bevat alleen de instellingen van ruff en pytest.
+
+Twee implementaties van hetzelfde idee delen een **contract-test**: één
+`tests/test_contract.py` die in beide projecten byte-voor-byte gelijk is. Alleen
+`tests/conftest.py` verschilt.
+
 ### Scheid logica van I/O
 
 Zet rekenwerk (deeltjes bijwerken, een golfvorm genereren, een HTTP-request
@@ -142,10 +150,17 @@ in het geheugen gebeurt.
 - Een library-target voor de pure logica (`<project>_core`), en daarnaast de
   app en de tests die daartegen linken.
 - Waarschuwingen per target, niet globaal:
-  `-Wall -Wextra -Wpedantic -Wshadow -Wconversion`. Nieuwe code bouwt zonder
-  waarschuwingen.
+  `-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wno-sign-conversion`.
+  Nieuwe code bouwt zonder waarschuwingen. `-Wno-sign-conversion` staat erbij
+  omdat elke `size_t`-index anders een cast nodig heeft. Die ruis leert
+  studenten vooral om waarschuwingen te negeren.
+- C-projecten zetten `_POSIX_C_SOURCE=200809L`: strikt C17 verbergt anders
+  POSIX-functies zoals `sigaction`.
 - Optie `SANITIZE` (ASan + UBSan) voor de debug-build.
 - Tests via `enable_testing()` en `add_test()`, uitgevoerd met `ctest`.
+- Testprogramma's gebruiken een eigen `CHECK()`-macro in plaats van
+  `assert()`. `assert()` verdwijnt in een Release-build (`NDEBUG`), en dan
+  test je niets meer.
 
 ## 7. pixi
 
@@ -155,7 +170,11 @@ in het geheugen gebeurt.
 - Elke dependency krijgt een versiebereik en, als het niet vanzelf spreekt, een
   regel commentaar waarom hij erin zit.
 - Iedere C/C++-workspace heeft dezelfde taken: `configure`, `build`, `test`,
-  `start`, `smoke`, `build-debug` en `test-debug`.
+  `start`, `smoke`, `build-debug` en `test-debug`. Python-workspaces hebben
+  `start`, `test`, `lint`, `format` en `smoke`.
+- `smoke` moet werken zonder scherm en zonder geluidskaart (via SSH):
+  `SDL_VIDEODRIVER=offscreen`, `SDL_AUDIODRIVER=dummy`, en een optie
+  `--frames N` waarmee de app vanzelf stopt.
 - `pixi.lock` wordt altijd gecommit.
 
 ## 8. Git

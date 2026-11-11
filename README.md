@@ -45,7 +45,8 @@ Alle C/C++-projecten hebben dezelfde taken:
 | `pixi run build-debug` | Debug-build met AddressSanitizer en UBSan in `build-debug/` |
 | `pixi run test-debug` | De tests in de sanitizer-build |
 
-De Python-projecten hebben `start`, `test` (pytest) en `lint` (ruff).
+De Python-projecten hebben `start`, `test` (pytest), `lint` en `format` (ruff)
+en `smoke`.
 
 `pixi.lock` legt elke versie vast, de compiler ook. Elke checkout bouwt dus
 overal hetzelfde.
@@ -76,3 +77,7 @@ pixi run smoke   # SDL_VIDEODRIVER=offscreen, SDL_AUDIODRIVER=dummy, stopt vanze
   met de projectmap als scope: `feat(cpp_synth): add square wave`.
 - Een nieuw project kopieert de opbouw en de pixi-taken van een bestaand project
   in dezelfde taal.
+
+## Licentie
+
+[MIT](LICENSE).
