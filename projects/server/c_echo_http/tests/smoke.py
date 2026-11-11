@@ -25,8 +25,10 @@ def main() -> int:
         for path in ("/", "/raw"):
             with urllib.request.urlopen(match.group(0) + path, timeout=5) as resp:
                 body = resp.read()
-                print(f"GET {path} -> {resp.status}, {len(body)} bytes, "
-                      f"X-Request-Count {resp.headers['X-Request-Count']}")
+                print(
+                    f"GET {path} -> {resp.status}, {len(body)} bytes, "
+                    f"X-Request-Count {resp.headers['X-Request-Count']}"
+                )
     finally:
         proc.send_signal(signal.SIGINT)
         proc.wait(timeout=5)

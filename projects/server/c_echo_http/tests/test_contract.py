@@ -31,9 +31,13 @@ class Response:
     body: bytes
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def port(server_cmd: list[str]) -> Iterator[int]:
-    """Start the server on a free port, yield the port, stop it with Ctrl+C."""
+    """Start the server on a free port, yield the port, stop it with Ctrl+C.
+
+    One server serves all tests in this file, as a real server serves many
+    clients; the clean stop on Ctrl+C is checked once, at the end.
+    """
     proc = subprocess.Popen(
         [*server_cmd, "--port", "0"],
         cwd=PROJECT_ROOT,
