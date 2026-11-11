@@ -1,0 +1,28 @@
+[workspace]
+name = "cpp-synth"
+description = "Your keyboard as a synthesizer, with the waveform live on screen (C++20, SDL3)"
+channels = ["https://prefix.dev/conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+cmake = ">=3.20"
+ninja = "*"
+# gcc/g++ from conda-forge, so every student builds with the same compiler.
+cxx-compiler = ">=2.0.0,<3"
+# Window, input, 2D rendering and audio output. Display and sound drivers stay the system's.
+sdl3 = ">=3.2,<4"
+
+[tasks]
+# Configure once; after that `cmake --build` reconfigures by itself when CMakeLists.txt changes.
+configure = { cmd = "cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH=$CONDA_PREFIX", outputs = ["build/CMakeCache.txt"] }
+build = { cmd = "cmake --build build", depends-on = ["configure"] }
+test = { cmd = "ctest --test-dir build --output-on-failure", depends-on = ["build"] }
+start = { cmd = "./build/cpp_synth", depends-on = ["build"] }
+# Plays the demo for 3 s without screen or sound card; the last frame goes to build/shot.png.
+smoke = { cmd = "./build/cpp_synth --demo --frames 180 --shot build/shot.png", env = { SDL_VIDEODRIVER = "offscreen", SDL_AUDIODRIVER = "dummy" }, depends-on = ["build"] }
+# Renders the demo to build/demo.wav, no audio device needed (handy over SSH).
+wav = { cmd = "./build/cpp_synth --wav build/demo.wav", depends-on = ["build"] }
+
+# Asserts on, optimiser off, AddressSanitizer + UBSan, in its own tree.
+build-debug = "cmake -S . -B build-debug -G Ninja -DCMAKE_BUILD_TYPE=Debug -DSANITIZE=ON -DCMAKE_PREFIX_PATH=$CONDA_PREFIX && cmake --build build-debug"
+test-debug = { cmd = "ctest --test-dir build-debug --output-on-failure", depends-on = ["build-debug"] }
