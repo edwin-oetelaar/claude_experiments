@@ -1,0 +1,17 @@
+# pixi environments (pixi.lock stays tracked)
+.pixi/
+
+# CMake build trees
+build/
+build-*/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Editors
+.vscode/
+.idea/
+*.swp
