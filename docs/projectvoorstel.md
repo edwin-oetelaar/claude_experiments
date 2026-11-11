@@ -27,6 +27,9 @@ begrijpen en rijk genoeg om op door te bouwen.
 Studenten HBO-ICT. Kennis van een programmeertaal wordt verondersteld. C/C++
 hoeft nog niet bekend te zijn: de projecten zijn daar juist een kennismaking mee.
 
+De projecten zijn **keuze- en extra-curriculair** en horen niet bij één vak.
+Studenten kiezen ze zelf, voor een lab, minor of hackathon of als zelfstudie.
+
 ## Uitgangspunten
 
 | Uitgangspunt | Invulling |
@@ -46,7 +49,7 @@ hoeft nog niet bekend te zijn: de projecten zijn daar juist een kennismaking mee
 - **SDL3** voor venster, input, 2D-rendering en audio.
 - **Python 3.12** voor zelfstandige apps, testclients en tooling. Tests met
   pytest, lint met ruff.
-- **Linux** (`linux-64`) als doelplatform.
+- **Linux** (`linux-64`) als doelplatform. Op Windows gebruiken studenten WSL2.
 
 ## Eerste set projecten
 
@@ -88,13 +91,12 @@ plan voor de volgende stap:
 3. Review met docenten en een paar studenten: wat werkt, wat is te groot of te klein?
 4. Volgende projecten kiezen uit de lijst hierboven, of nieuwe.
 
-## Open punten
+## Afspraken
 
-Deze punten zijn nog niet besloten en vragen een keuze van de opdrachtgever:
-
-- In welk(e) vak(ken) of semester worden de projecten ingezet?
-- Hoeveel tijd mag een student per project kwijt zijn?
-- Worden de opdrachten beoordeeld, en zo ja, hoe?
-- Werken studenten op eigen laptops (Linux / WSL2 / macOS?) of op labmachines?
-  Dit bepaalt of er naast `linux-64` meer platforms in `pixi.toml` moeten.
-- Hoe worden de projecten uitgedeeld (GitLab-groep, zip, template-repo)?
+| Onderwerp | Afspraak |
+|---|---|
+| **Inzet** | Keuze- en extra-curriculair, niet gekoppeld aan één vak of semester. |
+| **Tijd** | Geen richttijd. De opdrachten in elke README lopen op van opwarmer tot uitdaging, en de student bepaalt zelf hoe ver hij of zij gaat. |
+| **Beoordeling** | Geen cijfer per project. Een uitgewerkt project kan als bewijsstuk in het portfolio van de student, bijvoorbeeld een eigen fork met commits en geslaagde tests. |
+| **Platforms** | Linux, en Windows via WSL2. `pixi.toml` blijft daarom `linux-64`. WSLg op Windows 11 geeft vensters en geluid, dus de graphics- en geluidsprojecten werken ook daar. |
+| **Uitdelen** | Studenten clonen de publieke repository <https://github.com/edwin-oetelaar/claude_experiments> (MIT-licentie). |

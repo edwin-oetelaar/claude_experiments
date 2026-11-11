@@ -18,6 +18,14 @@ het uit te breiden.
 
 ## Snel starten
 
+Werkt op Linux, en op Windows via WSL2 (Windows 11 met WSLg geeft vensters en
+geluid). Haal de repository op:
+
+```bash
+git clone https://github.com/edwin-oetelaar/claude_experiments.git
+cd claude_experiments
+```
+
 Installeer [pixi](https://pixi.sh) één keer:
 
 ```bash
