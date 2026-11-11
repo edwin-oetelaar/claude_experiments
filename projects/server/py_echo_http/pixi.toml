@@ -1,0 +1,19 @@
+[workspace]
+name = "py-echo-http"
+description = "The echo HTTP server again, in Python with asyncio, for comparison with c_echo_http"
+channels = ["https://prefix.dev/conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+# The server itself uses the standard library only.
+python = "3.12.*"
+pytest = ">=8,<10"
+ruff = ">=0.6,<1"
+
+[tasks]
+start = "python -m echo_http"
+test = "pytest -q tests"
+lint = "ruff check . && ruff format --check ."
+format = "ruff format ."
+# Start, fetch two pages with Python's urllib, stop: a quick end-to-end check.
+smoke = "python tests/smoke.py python -m echo_http"

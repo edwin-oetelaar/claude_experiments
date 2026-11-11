@@ -1,0 +1,12 @@
+# Tool configuration only; the project is run from its directory, not installed.
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# pycodestyle, pyflakes, import order, naming, pyupgrade, bugbear, simplify
+select = ["E", "W", "F", "I", "N", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
